@@ -35,19 +35,34 @@ const LogDisplay = () => {
           {error}
         </Typography>
       )}
-      <List>
-        {logs.length > 0 ? (
-          logs.map((log, index) => (
-            <ListItem key={index}>
-              <ListItemText primary={log} />
-            </ListItem>
-          ))
-        ) : (
-          <Typography variant="body2" color="textSecondary">
-            No logs available.
-          </Typography>
-        )}
-      </List>
+      <Box
+        sx={{
+          maxHeight: 700, // Fixed height for the scrollable area
+          overflow: 'auto', // Enables scrolling within this box
+          border: '1px solid #ccc', // Optional: Add a border for clarity
+          borderRadius: 2, // Optional: Add rounded corners
+          padding: 2, // Add padding for better readability
+          '&::-webkit-scrollbar': {
+            display: 'none', // Hide scrollbar for WebKit browsers
+          },
+          '-ms-overflow-style': 'none', // Hide scrollbar for Internet Explorer
+          'scrollbar-width': 'none', // Hide scrollbar for Firefo
+        }}
+      >
+        <List>
+          {logs.length > 0 ? (
+            logs.map((log, index) => (
+              <ListItem key={index}>
+                <ListItemText primary={log} />
+              </ListItem>
+            ))
+          ) : (
+            <Typography variant="body2" color="textSecondary">
+              No logs available.
+            </Typography>
+          )}
+        </List>
+      </Box>
     </Box>
   );
 };
