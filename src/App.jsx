@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Typography, Grid, Card, CardContent } from '@mui/material';
 import ConfigurationForm from './components/ConfigurationForm';
 import TicketDisplay from './components/TicketDisplay';
 import ControlPanel from './components/ControlPanel';
@@ -11,15 +11,58 @@ const App = () => {
 
   return (
     <Container>
-      <Box sx={{ textAlign: 'center', mt: 4 }}>
-        <Typography variant="h4" gutterBottom>
+      <Box sx={{ textAlign: 'center', mt: 4, mb: 4 }}>
+        <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold', color: '#1976d2' }}>
           Real-Time Event Ticketing System
         </Typography>
-        <ConfigurationForm setTickets={setTickets} setLogs={setLogs} />
-        <TicketDisplay tickets={tickets} />
-        <ControlPanel setLogs={setLogs} />
-        <LogDisplay logs={logs} />
       </Box>
+
+      <Grid container spacing={4}>
+        {/* Configuration Section */}
+        <Grid item xs={12} md={6}>
+          <Card elevation={3}>
+            <CardContent>
+              <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold' }}>
+                Configuration
+              </Typography>
+              <ConfigurationForm setTickets={setTickets} setLogs={setLogs} />
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Ticket Display Section */}
+        <Grid item xs={12} md={6}>
+          <Card elevation={3}>
+            <CardContent sx={{ textAlign: 'center' }}>
+              <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold' }}>
+                Ticket Availability
+              </Typography>
+              <TicketDisplay tickets={tickets} />
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Control Panel Section */}
+        <Grid item xs={12}>
+          <Card elevation={3}>
+            <CardContent sx={{ textAlign: 'center' }}>
+              <ControlPanel setLogs={setLogs} />
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Logs Section */}
+        <Grid item xs={12}>
+          <Card elevation={3}>
+            <CardContent>
+              <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold' }}>
+                Logs
+              </Typography>
+              <LogDisplay />
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </Container>
   );
 };

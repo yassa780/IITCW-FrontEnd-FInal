@@ -8,7 +8,7 @@ const LogDisplay = () => {
   // Fetch logs from the backend
   const fetchLogs = async () => {
     try {
-      const response = await fetch('http://localhost:9095/api/logs'); // Adjust the URL as per your backend
+      const response = await fetch('http://localhost:9095/api/logs'); // URL of the backend for log fetch
       if (!response.ok) {
         throw new Error(`Error fetching logs: ${response.statusText}`);
       }
@@ -30,14 +30,6 @@ const LogDisplay = () => {
   return (
     <Box sx={{ mt: 4 }}>
       <Typography variant="h6">Logs</Typography>
-      <Button 
-        variant="outlined" 
-        color="primary" 
-        onClick={fetchLogs} 
-        sx={{ mb: 2 }}
-      >
-        Refresh Logs
-      </Button>
       {error && (
         <Typography color="error" variant="body2">
           {error}
