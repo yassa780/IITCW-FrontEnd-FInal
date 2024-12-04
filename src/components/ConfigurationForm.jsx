@@ -4,6 +4,7 @@ import api from '../services/api';
 
 const ConfigurationForm = ({ setTickets, setLogs }) => {
   const [formData, setFormData] = useState({
+    eventName: '',
     totalTickets: '',
     ticketReleaseRate: '',
     customerRetrievalRate: '',
@@ -66,6 +67,17 @@ const ConfigurationForm = ({ setTickets, setLogs }) => {
   return (
     <Box sx={{ mt: 4 }}>
       <Typography variant="h6">Configuration</Typography>
+      <TextField
+        label="Event Name"
+        name="eventName"
+        variant="outlined"
+        fullWidth
+        sx={{ mt: 2 }}
+        value={formData.eventName}
+        onChange={handleChange}
+        error={!!errors.eventName}
+        helperText={errors.eventName}
+      />
       <TextField
         label="Total Tickets"
         name="totalTickets"

@@ -19,6 +19,39 @@ const LogDisplay = () => {
     }
   };
 
+  //Clear logs from the backend
+  const clearLogs = async () => {
+    try {
+      const response = await fetch('http://localhost:9095/api/logs', {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error(`Error clearing logs: ${response.statusText}`);
+      }
+      
+      setLogs([]); //Clear logs in the frontend state
+      
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  // Render logs
+  const renderLogs = () => (
+    <List>
+      {logs.length > 0? (
+        logs.map((log, index) => (
+          <ListItem key={index}>
+            <ListItemText primary={log} />
+          </ListItem>
+        ))
+      ) : (
+        <ListItem>
+          <ListItemText primary="No logs found." />
+        </ListItem>
+      )}
+    </List>
+  );
   // Automatically fetch logs on component mount
   useEffect(() => {
     fetchLogs();
@@ -26,6 +59,12 @@ const LogDisplay = () => {
     const interval = setInterval(fetchLogs, 5000);
     return () => clearInterval(interval); // Cleanup on component unmount
   }, []);
+
+      //Clear logs and fetch logs when the page loads
+      useEffect(() => {
+        clearLogs();
+        fetchLogs();
+      }, []);
 
   return (
     <Box sx={{ mt: 4 }}>

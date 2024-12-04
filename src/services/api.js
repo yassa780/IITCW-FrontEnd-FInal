@@ -31,6 +31,15 @@ const api = {
       throw new Error(`Error: ${response.status}`);
     }
   },
+
+  clearLogs: async () => {
+    const response = await fetch(`${BASE_URL}/ logs`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+  }
 };
 
 export default api;

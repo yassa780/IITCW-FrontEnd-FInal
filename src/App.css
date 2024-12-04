@@ -1,0 +1,10 @@
+/* Light blue background for the entire page */
+body {
+    background-color: #e3f2fd; /* Light blue */
+    margin: 0; /* Removes default margin */
+    padding: 0; /* Removes default padding */
+    font-family: 'Arial', sans-serif; /* Optional: Set a font-family */
+  }
+  
+
+  
