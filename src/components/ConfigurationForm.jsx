@@ -39,6 +39,31 @@ const ConfigurationForm = ({ setTickets, setLogs }) => {
       }
     });
 
+    // Validate Event Name (only if it's not empty)
+    if (formData.eventName && !isNaN(formData.eventName)) {
+      newErrors.eventName = 'The event Name cant be integers .';
+    }
+
+    // Validate numeric fields (only if they are not empty)
+    const numericFields = [
+      'totalTickets',
+      'ticketReleaseRate',
+      'customerRetrievalRate',
+      'maxTicketCapacity',
+      'numberOfVendors',
+      'numberOfCustomers',
+    ];
+
+    numericFields.forEach((field) => {
+      const value = parseInt(formData[field], 10);
+      if (formData[field] && isNaN(value)) {
+        newErrors[field] = `${field.replace(/([A-Z])/g, ' $1')} must be a number.`;
+      } else if (value < 0) {
+        newErrors[field] = `${field.replace(/([A-Z])/g, ' $1')} cannot be negative.`;
+      }
+    });
+  
+
     // Check for specific field validation
     const totalTickets = parseInt(formData.totalTickets, 10);
     const maxTicketCapacity = parseInt(formData.maxTicketCapacity, 10);
@@ -55,6 +80,7 @@ const ConfigurationForm = ({ setTickets, setLogs }) => {
       return;
     }
 
+    //Proceed if there are no validations
     try {
       const response = await api.configure(formData);
       setLogs((prev) => [...prev, 'System configured successfully.']);
