@@ -14,6 +14,7 @@ const LogDisplay = () => {
       }
       const data = await response.json();
       setLogs(data);
+      setError(null);//Clears the error state after a successful fetch
     } catch (err) {
       setError(err.message);
     }
@@ -55,8 +56,8 @@ const LogDisplay = () => {
   // Automatically fetch logs on component mount
   useEffect(() => {
     fetchLogs();
-    // Optionally refresh logs every 5 seconds
-    const interval = setInterval(fetchLogs, 5000);
+    // Optionally refresh logs every second
+    const interval = setInterval(fetchLogs, 1000);
     return () => clearInterval(interval); // Cleanup on component unmount
   }, []);
 
