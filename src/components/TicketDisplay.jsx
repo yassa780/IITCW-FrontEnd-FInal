@@ -1,6 +1,12 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 
+/**
+ * TicketDisplay component displays the current number of available tickets.
+ *
+ * @param {number} tickets - The number of tickets available to be displayed.
+ */
+
 const TicketDisplay = ({ tickets }) => {
   return (
     <Box sx={{ mt: 4 }}>

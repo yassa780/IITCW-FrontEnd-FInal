@@ -2,7 +2,16 @@ import React, { useState } from 'react';
 import { Box, TextField, Button, Typography } from '@mui/material';
 import api from '../services/api';
 
+/**
+ * ConfigurationForm component handles the input form for configuring the system.
+ * It validates user input and sends the configuration data to the server.
+ *
+ * @param {Function} setTickets - Function to update the available tickets.
+ * @param {Function} setLogs - Function to update the logs.
+ */
+
 const ConfigurationForm = ({ setTickets, setLogs }) => {
+  //State to manage form data
   const [formData, setFormData] = useState({
     eventName: '',
     totalTickets: '',
@@ -13,6 +22,7 @@ const ConfigurationForm = ({ setTickets, setLogs }) => {
     numberOfCustomers: '', 
   });
 
+  //State to validate errors
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -22,13 +32,14 @@ const ConfigurationForm = ({ setTickets, setLogs }) => {
       [name]: value,
     });
 
-    // Clear errors as user types
+    // This clears the errors for the current field if valid
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: value ? '' : prevErrors[name],
     }));
   };
 
+  //Validate the form and handle submission
   const handleSubmit = async () => {
     const newErrors = {};
 
@@ -39,12 +50,12 @@ const ConfigurationForm = ({ setTickets, setLogs }) => {
       }
     });
 
-    // Validate Event Name (only if it's not empty)
+    // Validate Event Name
     if (formData.eventName && !isNaN(formData.eventName)) {
       newErrors.eventName = 'The event Name cant be integers .';
     }
 
-    // Validate numeric fields (only if they are not empty)
+    // Validate numeric fields
     const numericFields = [
       'totalTickets',
       'ticketReleaseRate',
@@ -64,7 +75,7 @@ const ConfigurationForm = ({ setTickets, setLogs }) => {
     });
   
 
-    // Check for specific field validation
+    // Validate total tickets and maxTicketCapacity
     const totalTickets = parseInt(formData.totalTickets, 10);
     const maxTicketCapacity = parseInt(formData.maxTicketCapacity, 10);
 
@@ -74,13 +85,14 @@ const ConfigurationForm = ({ setTickets, setLogs }) => {
       }
     }
 
+    //If there are validation errors, update state and log an error
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       setLogs((prev) => [...prev, 'Please fix the errors before submitting.']);
       return;
     }
 
-    //Proceed if there are no validations
+    //Proceed to send data to the server
     try {
       const response = await api.configure(formData);
       setLogs((prev) => [...prev, 'System configured successfully.']);

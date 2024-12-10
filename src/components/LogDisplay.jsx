@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
+import api from '../services/api';
 
+/**
+ * LogDisplay component fetches and displays logs from the backend.
+ * It also provides functionality to clear logs.
+ */
 const LogDisplay = () => {
+  //State to store logs fetched from the backend
   const [logs, setLogs] = useState([]);
-  const [error, setError] = useState(null);
 
-  // Fetch logs from the backend
+  //State to store any error messages
+  const [error, setError] = useState(null);
+  
+  /**
+   * Fetches logs from the backend and updates the state.
+   * Displays an error if the fetch operation fails.
+   */
   const fetchLogs = async () => {
     try {
       const response = await fetch('http://localhost:9095/api/logs'); // URL of the backend for log fetch
@@ -20,7 +31,7 @@ const LogDisplay = () => {
     }
   };
 
-  //Clear logs from the backend
+  //Clear logs from the backend and updates the state
   const clearLogs = async () => {
     try {
       const response = await fetch('http://localhost:9095/api/logs', {
@@ -33,11 +44,13 @@ const LogDisplay = () => {
       setLogs([]); //Clear logs in the frontend state
       
     } catch (err) {
-      setError(err.message);
+      setError(err.message); //Set error message in state
     }
   };
 
-  // Render logs
+  /**
+   * Renders the list of logs
+   * Displays "No logs found" if the log array is empty */ 
   const renderLogs = () => (
     <List>
       {logs.length > 0? (
@@ -53,15 +66,18 @@ const LogDisplay = () => {
       )}
     </List>
   );
-  // Automatically fetch logs on component mount
+
+
+// Fetch logs when the component is mounted an set up periodic refresh
   useEffect(() => {
-    fetchLogs();
+    fetchLogs(); //fetches the logs intially
+
     // Optionally refresh logs every second
-    const interval = setInterval(fetchLogs, 1000);
-    return () => clearInterval(interval); // Cleanup on component unmount
+    const interval = setInterval(fetchLogs, 1000); //Refreshes logs ever second
+    return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
 
-      //Clear logs and fetch logs when the page loads
+      //Clear logs and fetch logs when the component is mounted
       useEffect(() => {
         clearLogs();
         fetchLogs();
@@ -77,18 +93,17 @@ const LogDisplay = () => {
       )}
       <Box
         sx={{
-          maxHeight: 700, // Fixed height for the scrollable area
+          maxHeight: 700, 
           overflow: 'auto', // Enables scrolling within this box
-          border: '1px solid #ccc', // Optional: Add a border for clarity
-          borderRadius: 2, // Optional: Add rounded corners
-          padding: 2, // Add padding for better readability
+          border: '1px solid #ccc', // Adds a border for clarity
+          borderRadius: 2, 
+          padding: 2, 
           '&::-webkit-scrollbar': {
-            display: 'none', // Hide scrollbar for WebKit browsers
-          },
-          '-ms-overflow-style': 'none', // Hide scrollbar for Internet Explorer
-          'scrollbar-width': 'none', // Hide scrollbar for Firefo
+            display: 'none', // Hides scrollbar
+          }
         }}
       >
+        {/* Render the list of logs */}
         <List>
           {logs.length > 0 ? (
             logs.map((log, index) => (

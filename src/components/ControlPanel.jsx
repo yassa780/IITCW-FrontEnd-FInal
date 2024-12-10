@@ -2,25 +2,38 @@ import React, {useState} from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import api from '../services/api';
 
+/**
+ * ControlPanel component provides a simple interface to start and stop the system.
+ * 
+ * @param {Function} setLogs - Function to update logs for user feedback.
+ */
+
 const ControlPanel = ({ setLogs }) => {
-  const [systemStarted, setSystemStarted] = useState(false); //State to track if the system is started
+  const [systemStarted, setSystemStarted] = useState(false); //State to track if the system is currently started
+  
+  /**
+   * Handles starting the system by calling the API and updating the logs and state.
+   */
   const handleStart = async () => {
     try {
-      await api.startSystem();
-      setLogs((prev) => [...prev, 'System started.']);
+      await api.startSystem(); //Calls the API to start the system
+      setLogs((prev) => [...prev, 'System started.']); //Log the action
       setSystemStarted(true); //Update state to indicate the system is started
     } catch (error) {
       setLogs((prev) => [...prev, `Error: ${error.message}`]);
     }
   };
 
+  /**
+   * Handles stopping the system by calling the API and updating the logs and state.
+   */
   const handleStop = async () => {
     try {
-      await api.stopSystem();
-      setLogs((prev) => [...prev, 'System stopped.']);
+      await api.stopSystem(); //Calls the API to stop the system
+      setLogs((prev) => [...prev, 'System stopped.']); //Logs the action
       setSystemStarted(false); //Update state to indicate the system is stopped
     } catch (error) {
-      setLogs((prev) => [...prev, `Error: ${error.message}`]);
+      setLogs((prev) => [...prev, `Error: ${error.message}`]); //Log any errors
     }
   };
 
