@@ -9,6 +9,7 @@ import './App.css';
 const App = () => {
   const [logs, setLogs] = useState([]);
   const [tickets, setTickets] = useState(0);
+  const [configurationComplete, setConfigurationComplete] = useState(false);
 
   return (
     <Container>
@@ -26,7 +27,11 @@ const App = () => {
               <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold' }}>
                 Configuration
               </Typography>
-              <ConfigurationForm setTickets={setTickets} setLogs={setLogs} />
+              <ConfigurationForm 
+              setTickets={setTickets} 
+              setLogs={setLogs}
+              setConfigurationComplete={setConfigurationComplete} 
+              />
             </CardContent>
           </Card>
         </Grid>
@@ -47,7 +52,7 @@ const App = () => {
         <Grid item xs={12}>
           <Card elevation={3}>
             <CardContent sx={{ textAlign: 'center' }}>
-              <ControlPanel setLogs={setLogs} />
+              <ControlPanel setLogs={setLogs} configurationComplete = {configurationComplete} />
             </CardContent>
           </Card>
         </Grid>

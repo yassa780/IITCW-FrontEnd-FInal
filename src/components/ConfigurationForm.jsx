@@ -10,7 +10,7 @@ import api from '../services/api';
  * @param {Function} setLogs - Function to update the logs.
  */
 
-const ConfigurationForm = ({ setTickets, setLogs }) => {
+const ConfigurationForm = ({ setTickets, setLogs, setConfigurationComplete }) => {
   //State to manage form data
   const [formData, setFormData] = useState({
     eventName: '',
@@ -89,6 +89,7 @@ const ConfigurationForm = ({ setTickets, setLogs }) => {
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       setLogs((prev) => [...prev, 'Please fix the errors before submitting.']);
+      setConfigurationComplete(false);
       return;
     }
 
@@ -99,6 +100,7 @@ const ConfigurationForm = ({ setTickets, setLogs }) => {
       setTickets(response.ticketsAvailable);
     } catch (error) {
       setLogs((prev) => [...prev, `Error: ${error.message}`]);
+      setConfigurationComplete(false);
     }
   };
 
