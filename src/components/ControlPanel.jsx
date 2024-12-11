@@ -11,19 +11,10 @@ import api from '../services/api';
 const ControlPanel = ({ setLogs, configurationComplete }) => {
   const [systemStarted, setSystemStarted] = useState(false); //State to track if the system is currently started
   
-  
-  const handleStart = async () => {
-    if (!configurationComplete) {
-      setLogs((prev) => [...prev, 'Please complete the configuration form before starting the system.']);
-      alert('Please complete the configuration form before starting the system.');
-      return;
-    }
-
-
-    /**
+   /**
    * Handles starting the system by calling the API and updating the logs and state.
    */
-
+  const handleStart = async () => {
     try {
       await api.startSystem(); //Calls the API to start the system
       setLogs((prev) => [...prev, 'System started.']); //Log the action
