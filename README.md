@@ -33,15 +33,17 @@ npm
 
 Installation
  1. Clone the repository:
+    -  https://github.com/yassa780/IITCW-FrontEnd-FInal.git
+    -  Open the project in VSCode
 
-2. Install dependencies
-    - npm install
+3. Install dependencies
+    - Type npm install in the terminal of VSCode
 
-3. Start the development server
-    - npm run dev
+4. Start the development server
+    - Type npm run dev
 
-4. Open your browser and navigate to
-   http://localhost: 5173
+5. Open your browser and navigate to
+   http://localhost:5173
 
  Project structure
  src/
@@ -73,6 +75,24 @@ Check Ticket Availability:
 
 Stop the System:
  - Use the Control Panel to stop the system.
+
+API Endpoints
+
+1. Configure the system
+Endpoint - POST /api/config
+ - Configures the ticketing system by sending parameters like ticket pool size, number of vendors..customers to the backend.
+
+2. Start the system
+POST /api/start
+ - Sends a request to the backend to start the ticketing system, initiating ticket addition and retrieval operations.
+
+3. Stop the system
+POST /api/stop
+ - Sends a request to the backend to stop the ticketing system.
+
+4. Clear Logs
+POST DELETE /api/logs
+ - Sends a request to the backend to delete all the logs that were maintained by the system.
 
 Contact information
 Name - Yasindu Mallawaarachchi
